@@ -9,7 +9,7 @@ npm install gulf-codemirror
 
 ## Usage
 
-```
+```js
 var bindEditor = require('gulf-codemirror')
 
 var cm = CodeMirror(document.body)
