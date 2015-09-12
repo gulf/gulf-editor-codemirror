@@ -1,0 +1,26 @@
+{
+  "name": "gulf-codemirror",
+  "version": "3.0.0",
+  "description": "Convenient gulf wrapper for codemirror (uses shareaJS's textOT)",
+  "main": "index.js",
+  "dependencies": {},
+  "peerDependencies": {
+    "gulf": "3.x",
+    "ot-text": "1.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marcelklehr/gulf-codemirror.git"
+  },
+  "keywords": [
+    "operational transformation",
+    "dom-ot",
+    "textarea"
+  ],
+  "author": "Marcel Klehr <mklehr@gmx.net>",
+  "license": "GPL",
+  "bugs": {
+    "url": "https://github.com/marcelklehr/gulf-codemirror/issues"
+  },
+  "homepage": "https://github.com/marcelklehr/gulf-codemirror#readme"
+}
