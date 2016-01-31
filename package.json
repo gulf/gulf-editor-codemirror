@@ -1,6 +1,6 @@
 {
   "name": "gulf-codemirror",
-  "version": "3.0.1",
+  "version": "4.0.0",
   "description": "Convenient gulf wrapper for codemirror (uses shareaJS's textOT)",
   "main": "index.js",
   "dependencies": {},
