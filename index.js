@@ -34,23 +34,27 @@ module.exports = function(cm, storageAdapter) {
     console.log('_change:', cs)
 
     // remember selection
-    var oldSel = cm.listSelections()
+    var oldSel = cm.listSelections().map(function(sel) {
+          return [cm.indexFromPos(sel.head), cm.indexFromPos(sel.anchor)]
+        })
       , oldScrollPos = cm.getScrollInfo()
 
     // apply changes
     cm.setValue(oldval = textOT.apply(oldval, cs))
 
     // take care of selection
-    var newSel = oldSel.map(function(sel) {
-      var sel = [cm.indexFromPos(sel.head), cm.indexFromPos(sel.anchor)]
-        , transformed = textOT.transformSelection(sel, cs).map(cm.posFromIndex.bind(cm))
-        return {head: transformed[0], anchor: transformed[1]}
+    var newSel = oldSel
+    .map(function(sel) {
+      return textOT.transformSelection(sel, cs)
+    })
+    .map(function(transformed) {
+      return {head: cm.posFromIndex(transformed[0]), anchor: cm.posFromIndex(transformed[1])}
     })
     cm.setSelections(newSel)
     cm.scrollTo(oldScrollPos.left, oldScrollPos.top)
     cb()
   }
-  
+ 
   // before _change() and on any edit event
   doc._collectChanges = function(cb) {
     var cs = []
