@@ -2,7 +2,6 @@
   "name": "gulf-editor-codemirror",
   "version": "5.0.0",
   "description": "Convenient gulf wrapper for codemirror (uses shareaJS's textOT)",
-  "main": "index.js",
   "dependencies": {
     "babel-runtime": "^6.11.6",
     "core-js": "2.x"
