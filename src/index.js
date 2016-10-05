@@ -1,6 +1,6 @@
 /**
  * gulf-codemirror
- * Copyright (C) 2015 Marcel Klehr <mklehr@gmx.net>
+ * Copyright (C) 2015-2016 Marcel Klehr <mklehr@gmx.net>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -16,54 +16,60 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 var gulf = require('gulf')
-  , textOT = require('ot-text').type
- 
-module.exports = function(cm, storageAdapter) {
-  var doc = new gulf.EditableDocument(storageAdapter || new gulf.MemoryAdapter, textOT)
-    , oldval
-  
-  doc.codemirror = cm
 
-  doc._setContents = function(newcontent, cb) {
-    cm.setValue(oldval = newcontent)
-    cb()
+class CodemirrorDocument extends gulf.EditableDocument {
+  constructor(opts) {
+    super(opts)
+    if (!opts.editorInstance) throw new Error('No codemirror instance was passed')
+    this.cm = opts.editorInstance
+    this.oldval = ''
+
+    this.cm.on('change', this.collectChanges = () => this._onBeforeChange())
   }
 
-  // on incoming changes
-  doc._change = function(cs, cb) {
-    console.log('_change:', cs)
+  close() {
+    super.close()
+    this.cm.off('change', this.collectChanges)
+  }
 
+  _setContent(newcontent) {
+    this.cm.setValue(this.oldval = newcontent)
+    return Promise.resolve()
+  }
+
+  _onChange(cs) {
     // remember selection
-    var oldSel = cm.listSelections().map(function(sel) {
-          return [cm.indexFromPos(sel.head), cm.indexFromPos(sel.anchor)]
+    const oldSel = this.cm.listSelections().map((sel) => {
+          return [this.cm.indexFromPos(sel.head), this.cm.indexFromPos(sel.anchor)]
         })
-      , oldScrollPos = cm.getScrollInfo()
+    const oldScrollPos = this.cm.getScrollInfo()
 
     // apply changes
-    cm.setValue(oldval = textOT.apply(oldval, cs))
+    cm.setValue(this.oldval = this.ottype.apply(this.oldval, cs))
 
     // take care of selection
     var newSel = oldSel
-    .map(function(sel) {
-      return textOT.transformSelection(sel, cs)
+    .map((sel) => {
+      return this.ottype.transformSelection(sel, cs)
     })
-    .map(function(transformed) {
-      return {head: cm.posFromIndex(transformed[0]), anchor: cm.posFromIndex(transformed[1])}
+    .map((transformed) => {
+      return {head: this.cm.posFromIndex(transformed[0]), anchor: this.cm.posFromIndex(transformed[1])}
     })
-    cm.setSelections(newSel)
-    cm.scrollTo(oldScrollPos.left, oldScrollPos.top)
-    cb()
+    this.cm.setSelections(newSel)
+    this.cm.scrollTo(oldScrollPos.left, oldScrollPos.top)
+    
+    return Promise.resolve()
   }
- 
-  // before _change() and on any edit event
-  doc._collectChanges = function(cb) {
+  
+  _onBeforeChange() {
     var cs = []
-      , newval = cm.getValue()
+      , oldval = this.oldval
+      , newval = this.cm.getValue()
 
     // The following code is taken from shareJS:
     // https://github.com/share/ShareJS/blob/3843b26831ecb781344fb9beb1005cfdd2/lib/client/textarea.js
 
-    if (oldval === newval) return cb();
+    if (oldval === newval) return Promise.resolve();
 
     var commonStart = 0;
     while (oldval.charAt(commonStart) === newval.charAt(commonStart)) {
@@ -83,18 +89,10 @@ module.exports = function(cm, storageAdapter) {
       cs.push(newval.slice(commonStart, newval.length - commonEnd));
     }
 
-    oldval = newval
-    console.log(cs)
-    this.update(cs)
-    cb()
+    this.oldval = newval
+    this.submitChange(cs)
+    return Promise.resolve()
   }
-
-  cm.on('change', genOp)
-  function genOp(evt) {
-    doc._collectChanges(noop)
-  }
-
-  return doc
 }
 
-function noop() {}
+module.exports = CodemirrorDocument
