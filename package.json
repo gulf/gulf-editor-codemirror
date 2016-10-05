@@ -27,7 +27,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/marcelklehr/gulf-editor-codemirror.git"
+    "url": "git+https://github.com/gulf/gulf-editor-codemirror.git"
   },
   "keywords": [
     "operational transformation",
@@ -37,7 +37,7 @@
   "author": "Marcel Klehr <mklehr@gmx.net>",
   "license": "LGPL-3.0",
   "bugs": {
-    "url": "https://github.com/marcelklehr/gulf-editor-codemirror/issues"
+    "url": "https://github.com/gulf/gulf-editor-codemirror/issues"
   },
-  "homepage": "https://github.com/marcelklehr/gulf-editor-codemirror#readme"
+  "homepage": "https://github.com/gulf/gulf-editor-codemirror#readme"
 }

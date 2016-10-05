@@ -1,5 +1,5 @@
 # gulf-editor-codemirror
-[Gulf](http://github.com/marcelklehr/gulf#readme) bindings for [codemirror](http://codemirror.net)
+[Gulf](http://github.com/gulf/gulf#readme) bindings for [codemirror](http://codemirror.net)
 
 (This version is compatible with gulf v5, only. For gulf v4 see the package `gulf-codemirror` on npm)
 
@@ -29,9 +29,8 @@ masterStream.pipe(doc.masterLink()).pipe(masterStream)
 ## API
 ### class CodemirrorDocument({editorInstance:CodeMirror, ...}) extends gulf.EditableDocument
   * `editorInstance` -- a codemirror instance to be wired up with gulf
-  * `storageAdapter` -- a gulf storage adapter (optional; defaults to the in-memory Adapter)
+  * `storageAdapter` -- a gulf storage adapter
   * `ottype` -- the ottype to use, this will usually be `ot-text` from npm.
-  * *returns* the `gulf.EditableDocument` (see [the gulf docs](http://github.com/marcelklehr/gulf#readme))
 
 
 ## Legal
