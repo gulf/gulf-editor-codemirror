@@ -4,9 +4,7 @@
   "description": "Convenient gulf wrapper for codemirror (uses shareaJS's textOT)",
   "dependencies": {
     "babel-runtime": "^6.11.6",
-    "core-js": "2.x"
-  },
-  "peerDependencies": {
+    "core-js": "2.x",
     "gulf": "5.x",
     "ot-text": "1.x"
   },

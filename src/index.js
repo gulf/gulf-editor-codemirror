@@ -16,9 +16,11 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 var gulf = require('gulf')
+  , textOT = require('ot-text').type
 
 class CodemirrorDocument extends gulf.EditableDocument {
   constructor(opts) {
+    opts.ottype = opts.ottype || textOT
     super(opts)
     if (!opts.editorInstance) throw new Error('No codemirror instance was passed')
     this.cm = opts.editorInstance
