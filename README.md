@@ -6,7 +6,7 @@
 ## Install
 
 ```
-npm install --save gulf gulf-editor-codemirror ot-text
+npm install --save gulf-editor-codemirror
 ```
 
 ## Usage
