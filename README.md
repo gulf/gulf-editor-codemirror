@@ -12,15 +12,11 @@ npm install --save gulf gulf-editor-codemirror ot-text
 ## Usage
 
 ```js
-const gulf = require('gulf')
-const textOT = require('ot-text').type
 const CodemirrorDocument = require('gulf-editor-codemirror')
 
 var cm = CodeMirror(document.body)
 var doc = new CodemirrorDocument({
-  storageAdapter: new gulf.MemoryAdapter
-, ottype: textOT
-, editorInstance: cm
+  editorInstance: cm
 })
 
 masterStream.pipe(doc.masterLink()).pipe(masterStream)
@@ -29,8 +25,8 @@ masterStream.pipe(doc.masterLink()).pipe(masterStream)
 ## API
 ### class CodemirrorDocument({editorInstance:CodeMirror, ...}) extends gulf.EditableDocument
   * `editorInstance` -- a codemirror instance to be wired up with gulf
-  * `storageAdapter` -- a gulf storage adapter
-  * `ottype` -- the ottype to use, this will usually be `ot-text` from npm.
+  * `storageAdapter` -- (optional) a gulf storage adapter. Default is `gulf.MemoryAdapter`
+  * `ottype` -- (optional) the ottype to use. Default is `ot-text`.
 
 
 ## Legal
