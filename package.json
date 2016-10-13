@@ -1,6 +1,6 @@
 {
   "name": "gulf-editor-codemirror",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Convenient gulf wrapper for codemirror (uses shareaJS's textOT)",
   "dependencies": {
     "babel-runtime": "^6.11.6",
@@ -16,7 +16,9 @@
     "presets": [
       "es2015"
     ],
-    "plugins": ["transform-runtime"]
+    "plugins": [
+      "transform-runtime"
+    ]
   },
   "devDependencies": {
     "babel-cli": "6.x",
